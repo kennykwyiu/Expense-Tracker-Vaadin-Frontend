@@ -29,6 +29,20 @@ public class Logger {
         logger.info("[{}] " + message, prependClassName(args));
     }
 
+    /**
+     * Log a warning message.
+     */
+    public void warn(String message) {
+        logger.warn("[{}] {}", className, message);
+    }
+
+    /**
+     * Log a warning message with parameters.
+     */
+    public void warn(String message, Object... args) {
+        logger.warn("[{}] " + message, prependClassName(args));
+    }
+
 
     /**
      * Helper method to prepend class name to arguments array.
