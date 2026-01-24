@@ -15,4 +15,14 @@ public class Logger {
         this.className = clazz.getSimpleName();
     }
 
+
+    /**
+     * Helper method to prepend class name to arguments array.
+     */
+    private Object[] prependClassName(Object... args) {
+        Object[] result = new Object[args.length + 1];
+        result[0] = className;
+        System.arraycopy(args, 0, result, 1, args.length);
+        return result;
+    }
 }
