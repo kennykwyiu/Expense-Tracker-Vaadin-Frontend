@@ -15,6 +15,20 @@ public class Logger {
         this.className = clazz.getSimpleName();
     }
 
+    /**
+     * Log an informational message.
+     */
+    public void info(String message) {
+        logger.info("[{}] {}", className, message);
+    }
+
+    /**
+     * Log an informational message with parameters.
+     */
+    public void info(String message, Object... args) {
+        logger.info("[{}] " + message, prependClassName(args));
+    }
+
 
     /**
      * Helper method to prepend class name to arguments array.
