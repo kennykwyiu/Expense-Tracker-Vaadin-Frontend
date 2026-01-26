@@ -64,6 +64,19 @@ public class Logger {
         logger.error("[{}] " + message, prependClassName(args));
     }
 
+    /**
+     * Log a debug message.
+     */
+    public void debug(String message) {
+        logger.debug("[{}] {}", className, message);
+    }
+
+    /**
+     * Log a debug message with parameters.
+     */
+    public void debug(String message, Object... args) {
+        logger.debug("[{}] " + message, prependClassName(args));
+    }
 
     /**
      * Helper method to prepend class name to arguments array.
