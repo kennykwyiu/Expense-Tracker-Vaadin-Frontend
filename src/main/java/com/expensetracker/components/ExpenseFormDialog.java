@@ -30,4 +30,7 @@ import java.util.function.Consumer;
  * Supports single and batch expense entry with toggleable description.
  */
 public class ExpenseFormDialog extends Dialog {
+    private final Logger logger = new Logger(ExpenseFormDialog.class);
+
+
 }
