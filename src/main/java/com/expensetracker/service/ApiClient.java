@@ -87,4 +87,25 @@ public class ApiClient {
         }
     }
 
+    /**
+     * Delete an expense by ID.
+     */
+    public void deleteExpense(Integer id) {
+        try {
+            logger.info("Deleting expense ID: " + id);
+
+            webClient.delete()
+                    .uri("/expenses/{id}", id)
+                    .retrieve()
+                    .toBodilessEntity()
+                    .block();
+        } catch (WebClientResponseException e) {
+            logger.error("Failed to delete expense: " + e.getMessage());
+            throw new RuntimeException("Failed to delete expense: " + e.getResponseBodyAsString());
+        } catch (Exception e) {
+            logger.error("Error deleting expense: " + e.getMessage());
+            throw new RuntimeException("Error deleting expense: " + e.getMessage());
+        }
+    }
+
 }
