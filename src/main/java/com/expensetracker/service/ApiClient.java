@@ -59,4 +59,32 @@ public class ApiClient {
         }
     }
 
+    /**
+     * Update an existing expense.
+     */
+    public ExpenseResponse updateExpense(Integer id, LocalDate date, BigDecimal amount, String category, String description) {
+        try {
+            UpdateExpenseRequest request = new UpdateExpenseRequest();
+            request.setDate(date);
+            request.setAmount(amount);
+            request.setCategory(category);
+            request.setDescription(description);
+
+            logger.info("Updating expense ID: " + id);
+
+            return webClient.put()
+                    .uri("/expenses/{id}", id)
+                    .bodyValue(request)
+                    .retrieve()
+                    .bodyToMono(ExpenseResponse.class)
+                    .block();
+        } catch (WebClientResponseException e) {
+            logger.error("Failed to update expense: " + e.getMessage());
+            throw new RuntimeException("Failed to update expense: " + e.getResponseBodyAsString());
+        } catch (Exception e) {
+            logger.error("Error updating expense: " + e.getMessage());
+            throw new RuntimeException("Error updating expense: " + e.getMessage());
+        }
+    }
+
 }
