@@ -108,4 +108,53 @@ public class ApiClient {
         }
     }
 
+    /**
+     * List expenses for a specific month and year.
+     */
+    public ListExpensesResponse listExpenses(Integer year, Integer month) {
+        try {
+            logger.info("Fetching expenses for " + year + "-" + month);
+
+            return webClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/expenses")
+                            .queryParam("year", year)
+                            .queryParam("month", month)
+                            .build())
+                    .retrieve()
+                    .bodyToMono(ListExpensesResponse.class)
+                    .block();
+        } catch (WebClientResponseException e) {
+            logger.error("Failed to list expenses: " + e.getMessage());
+            throw new RuntimeException("Failed to list expenses: " + e.getResponseBodyAsString());
+        } catch (Exception e) {
+            logger.error("Error listing expenses: " + e.getMessage());
+            throw new RuntimeException("Error listing expenses: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Batch create multiple expenses.
+     */
+    public BatchCreateResponse batchCreateExpenses(List<CreateExpenseRequest> expenses) {
+        try {
+            BatchCreateExpensesRequest request = new BatchCreateExpensesRequest();
+            request.setExpenses(expenses);
+
+            logger.info("Batch creating " + expenses.size() + " expenses");
+
+            return webClient.post()
+                    .uri("/expenses/batch")
+                    .bodyValue(request)
+                    .retrieve()
+                    .bodyToMono(BatchCreateResponse.class)
+                    .block();
+        } catch (WebClientResponseException e) {
+            logger.error("Failed to batch create expenses: " + e.getMessage());
+            throw new RuntimeException("Failed to batch create expenses: " + e.getResponseBodyAsString());
+        } catch (Exception e) {
+            logger.error("Error batch creating expenses: " + e.getMessage());
+            throw new RuntimeException("Error batch creating expenses: " + e.getMessage());
+        }
+    }
 }
