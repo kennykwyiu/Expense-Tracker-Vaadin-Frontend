@@ -31,4 +31,32 @@ public class ApiClient {
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * Create a single expense.
+     */
+    public ExpenseResponse createExpense(LocalDate date, BigDecimal amount, String category, String description) {
+        try {
+            CreateExpenseRequest request = new CreateExpenseRequest();
+            request.setDate(date);
+            request.setAmount(amount);
+            request.setCategory(category);
+            request.setDescription(description);
+
+            logger.info("Creating expense: " + category + " - " + amount);
+
+            return webClient.post()
+                    .uri("/expenses")
+                    .bodyValue(request)
+                    .retrieve()
+                    .bodyToMono(ExpenseResponse.class)
+                    .block();
+        } catch (WebClientResponseException e) {
+            logger.error("Failed to create expense: " + e.getMessage());
+            throw new RuntimeException("Failed to create expense: " + e.getResponseBodyAsString());
+        } catch (Exception e) {
+            logger.error("Error creating expense: " + e.getMessage());
+            throw new RuntimeException("Error creating expense: " + e.getMessage());
+        }
+    }
+
 }
