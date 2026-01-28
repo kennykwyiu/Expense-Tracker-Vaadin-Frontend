@@ -46,6 +46,12 @@ public class ExpenseFormDialog extends Dialog {
     private boolean isEditMode = false;
     private boolean descriptionVisible = false;
 
+    /**
+     * Set callback for update action
+     */
+    public void setOnUpdate(Consumer<UpdateExpenseRequest> callback) {
+        this.onUpdate = callback;
+    }
 
     /**
      * Set the date for the form
