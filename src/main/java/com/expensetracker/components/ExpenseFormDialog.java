@@ -46,6 +46,24 @@ public class ExpenseFormDialog extends Dialog {
     private boolean isEditMode = false;
     private boolean descriptionVisible = false;
 
+    /**
+     * Populate form with expense data for editing
+     */
+    public void setExpenseData(LocalDate date, BigDecimal amount, String category, String description) {
+        logger.info("Setting expense data for edit");
+        datePicker.setValue(date);
+        amountField.setValue(amount);
+        categoryCombo.setValue(category);
+        descriptionArea.setValue(description != null ? description : "");
+
+        // Show description if it has content
+        if (description != null && !description.isEmpty()) {
+            descriptionVisible = true;
+            descriptionArea.setVisible(true);
+            toggleDescriptionBtn.setText("Hide Note");
+            toggleDescriptionBtn.setIcon(VaadinIcon.MINUS.create());
+        }
+    }
 
     /**
      * Inner class to hold expense item data
