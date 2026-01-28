@@ -46,6 +46,14 @@ public class ExpenseFormDialog extends Dialog {
     private boolean isEditMode = false;
     private boolean descriptionVisible = false;
 
+
+    /**
+     * Set the date for the form
+     */
+    public void setDate(LocalDate date) {
+        datePicker.setValue(date);
+    }
+
     /**
      * Populate form with expense data for editing
      */
