@@ -32,5 +32,18 @@ import java.util.function.Consumer;
 public class ExpenseFormDialog extends Dialog {
     private final Logger logger = new Logger(ExpenseFormDialog.class);
 
+    private final DatePicker datePicker;
+    private final BigDecimalField amountField;
+    private final ComboBox<String> categoryCombo;
+    private final TextArea descriptionArea;
+    private final VerticalLayout itemsContainer;
+    private final List<ExpenseItem> expenseItems = new ArrayList<>();
+    private final Button toggleDescriptionBtn;
+
+    private Consumer<List<CreateExpenseRequest>> onSave;
+    private Consumer<UpdateExpenseRequest> onUpdate;
+    private Integer editingExpenseId;
+    private boolean isEditMode = false;
+    private boolean descriptionVisible = false;
 
 }
