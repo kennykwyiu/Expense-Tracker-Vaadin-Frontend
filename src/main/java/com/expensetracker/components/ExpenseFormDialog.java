@@ -46,4 +46,21 @@ public class ExpenseFormDialog extends Dialog {
     private boolean isEditMode = false;
     private boolean descriptionVisible = false;
 
+
+    /**
+     * Inner class to hold expense item data
+     */
+    private static class ExpenseItem {
+        LocalDate date;
+        BigDecimal amount;
+        String category;
+        String description;
+
+        ExpenseItem(LocalDate date, BigDecimal amount, String category, String description) {
+            this.date = date;
+            this.amount = amount;
+            this.category = category;
+            this.description = description;
+        }
+    }
 }
