@@ -47,6 +47,13 @@ public class ExpenseFormDialog extends Dialog {
     private boolean descriptionVisible = false;
 
     /**
+     * Set callback for save action
+     */
+    public void setOnSave(Consumer<List<CreateExpenseRequest>> callback) {
+        this.onSave = callback;
+    }
+
+    /**
      * Set callback for update action
      */
     public void setOnUpdate(Consumer<UpdateExpenseRequest> callback) {
