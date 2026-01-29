@@ -47,6 +47,61 @@ public class ExpenseFormDialog extends Dialog {
     private boolean descriptionVisible = false;
 
     /**
+     * Save all expenses
+     */
+    private void save() {
+        logger.info("Saving expenses");
+
+        // Handle edit mode
+        if (isEditMode && editingExpenseId != null) {
+            if (amountField.getValue() != null && amountField.getValue().compareTo(BigDecimal.ZERO) > 0) {
+                UpdateExpenseRequest request = new UpdateExpenseRequest();
+                request.setDate(datePicker.getValue());
+                request.setAmount(amountField.getValue());
+                request.setCategory(categoryCombo.getValue());
+                request.setDescription(descriptionArea.getValue());
+
+                if (onUpdate != null) {
+                    logger.info("Updating expense ID: " + editingExpenseId);
+                    onUpdate.accept(request);
+                }
+            }
+        } else {
+            // Handle create mode - add current form data if valid
+            if (amountField.getValue() != null && amountField.getValue().compareTo(BigDecimal.ZERO) > 0) {
+                ExpenseItem currentItem = new ExpenseItem(
+                        datePicker.getValue(),
+                        amountField.getValue(),
+                        categoryCombo.getValue(),
+                        descriptionArea.getValue()
+                );
+                expenseItems.add(currentItem);
+            }
+
+            if (expenseItems.isEmpty()) {
+                logger.warn("No expenses to save");
+                return;
+            }
+
+            if (onSave != null) {
+                List<CreateExpenseRequest> requests = new ArrayList<>();
+                for (ExpenseItem item : expenseItems) {
+                    CreateExpenseRequest request = new CreateExpenseRequest();
+                    request.setDate(item.date);
+                    request.setAmount(item.amount);
+                    request.setCategory(item.category);
+                    request.setDescription(item.description);
+                    requests.add(request);
+                }
+                logger.info("Saving " + requests.size() + " expenses");
+                onSave.accept(requests);
+            }
+        }
+
+        close();
+    }
+
+    /**
      * Set callback for save action
      */
     public void setOnSave(Consumer<List<CreateExpenseRequest>> callback) {
