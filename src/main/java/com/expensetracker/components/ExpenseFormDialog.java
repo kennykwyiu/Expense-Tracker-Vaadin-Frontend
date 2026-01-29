@@ -47,6 +47,46 @@ public class ExpenseFormDialog extends Dialog {
     private boolean descriptionVisible = false;
 
     /**
+     * Add expense item to batch list
+     */
+    private void addExpenseItem() {
+        logger.info("Adding expense item");
+
+        // Validate current form
+        if (amountField.getValue() == null || amountField.getValue().compareTo(BigDecimal.ZERO) <= 0) {
+            logger.warn("Invalid amount");
+            return;
+        }
+
+        // Create current item
+        ExpenseItem currentItem = new ExpenseItem(
+                datePicker.getValue(),
+                amountField.getValue(),
+                categoryCombo.getValue(),
+                descriptionArea.getValue()
+        );
+        expenseItems.add(0, currentItem); // Add to top
+
+        // Display added item
+        Div itemDiv = createItemDisplay(currentItem, expenseItems.indexOf(currentItem));
+        itemsContainer.addComponentAsFirst(itemDiv);
+        itemsContainer.setVisible(true);
+
+        logger.info("Item added. Total items: " + expenseItems.size());
+
+        // Reset form
+//        datePicker.setValue(LocalDate.now());
+        amountField.clear();
+        amountField.focus();
+        categoryCombo.setValue("Food");
+        descriptionArea.clear();
+        descriptionVisible = false;
+        descriptionArea.setVisible(false);
+        toggleDescriptionBtn.setText("Add Note");
+        toggleDescriptionBtn.setIcon(VaadinIcon.PLUS.create());
+    }
+
+    /**
      * Create display for added item with delete button
      */
     private Div createItemDisplay(ExpenseItem item, int index) {
