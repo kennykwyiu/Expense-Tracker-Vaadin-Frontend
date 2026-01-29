@@ -47,6 +47,22 @@ public class ExpenseFormDialog extends Dialog {
     private boolean descriptionVisible = false;
 
     /**
+     * Toggle description visibility
+     */
+    private void toggleDescription() {
+        descriptionVisible = !descriptionVisible;
+        descriptionArea.setVisible(descriptionVisible);
+
+        if (descriptionVisible) {
+            toggleDescriptionBtn.setText("Hide Note");
+            toggleDescriptionBtn.setIcon(VaadinIcon.MINUS.create());
+        } else {
+            toggleDescriptionBtn.setText("Add Note");
+            toggleDescriptionBtn.setIcon(VaadinIcon.PLUS.create());
+        }
+    }
+
+    /**
      * Add expense item to batch list
      */
     private void addExpenseItem() {
