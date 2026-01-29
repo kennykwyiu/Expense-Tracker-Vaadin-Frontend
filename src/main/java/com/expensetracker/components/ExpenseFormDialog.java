@@ -47,6 +47,47 @@ public class ExpenseFormDialog extends Dialog {
     private boolean descriptionVisible = false;
 
     /**
+     * Create display for added item with delete button
+     */
+    private Div createItemDisplay(ExpenseItem item, int index) {
+        Div itemDiv = new Div();
+        itemDiv.addClassNames(
+                LumoUtility.Padding.SMALL,
+                LumoUtility.Background.CONTRAST_5,
+                LumoUtility.BorderRadius.MEDIUM
+        );
+        itemDiv.getStyle().set("display", "flex");
+        itemDiv.getStyle().set("justify-content", "space-between");
+        itemDiv.getStyle().set("align-items", "center");
+
+        StringBuilder itemText = new StringBuilder();
+        itemText.append(String.format("%s - %s ($%.2f)",
+                item.date,
+                item.category,
+                item.amount));
+
+        if (item.description != null && !item.description.isEmpty()) {
+            itemText.append(" - ").append(item.description);
+        }
+
+        Span itemSpan = new Span(itemText.toString());
+
+        Button deleteBtn = new Button(VaadinIcon.TRASH.create());
+        deleteBtn.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_ERROR);
+        deleteBtn.addClickListener(e -> {
+            expenseItems.remove(index);
+            itemsContainer.remove(itemDiv);
+            if (expenseItems.isEmpty()) {
+                itemsContainer.setVisible(false);
+            }
+            logger.info("Item removed. Total items: " + expenseItems.size());
+        });
+
+        itemDiv.add(itemSpan, deleteBtn);
+        return itemDiv;
+    }
+
+    /**
      * Save all expenses
      */
     private void save() {
