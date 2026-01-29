@@ -46,6 +46,89 @@ public class ExpenseFormDialog extends Dialog {
     private boolean isEditMode = false;
     private boolean descriptionVisible = false;
 
+
+    /**
+     * Constructor for editing existing expense
+     */
+    public ExpenseFormDialog(Integer expenseId) {
+        this.editingExpenseId = expenseId;
+        this.isEditMode = expenseId != null;
+        setHeaderTitle(isEditMode ? "Edit Expense" : "Add Expense");
+        setWidth("500px");
+        setModal(true);
+
+        // Main layout
+        VerticalLayout mainLayout = new VerticalLayout();
+        mainLayout.setSpacing(true);
+        mainLayout.setPadding(true);
+
+        // Create form
+        FormLayout form = new FormLayout();
+
+        // Date picker
+        datePicker = new DatePicker("Date");
+        datePicker.setValue(LocalDate.now());
+        form.add(datePicker);
+
+        // Amount field
+        amountField = new BigDecimalField("Amount");
+        amountField.setHelperText("Enter expense amount");
+//        amountField.setMin(0);
+        form.add(amountField);
+
+        // Category combo
+        categoryCombo = new ComboBox<>("Category");
+        categoryCombo.setItems("Food", "Transport", "Entertainment", "Shopping", "Utilities", "Other");
+        categoryCombo.setValue("Food");
+        form.add(categoryCombo);
+
+        // Toggle description button
+        toggleDescriptionBtn = new Button("Add Note", VaadinIcon.PLUS.create());
+        toggleDescriptionBtn.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
+        toggleDescriptionBtn.addClickListener(e -> toggleDescription());
+
+        // Description area (hidden by default)
+        descriptionArea = new TextArea("Description (Optional)");
+        descriptionArea.setMaxLength(500);
+        descriptionArea.setHeight("100px");
+        descriptionArea.setVisible(false);
+
+        form.add(toggleDescriptionBtn);
+        form.add(descriptionArea);
+
+        mainLayout.add(form);
+
+        // Items container for batch entry (only in create mode, scrollable)
+        itemsContainer = new VerticalLayout();
+        itemsContainer.setSpacing(true);
+        itemsContainer.setPadding(false);
+        itemsContainer.setMaxHeight("300px");
+        itemsContainer.getStyle().set("overflow-y", "auto");
+        itemsContainer.setVisible(false);
+
+        mainLayout.add(itemsContainer);
+
+        // Add item button (only in create mode)
+        Button addItemBtn = new Button("Add Another Item", VaadinIcon.PLUS.create());
+        addItemBtn.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+        addItemBtn.addClickListener(e -> addExpenseItem());
+        addItemBtn.setVisible(!isEditMode);
+
+        // Buttons
+        Button saveBtn = new Button("Save", e -> save());
+        saveBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
+        Button cancelBtn = new Button("Cancel", e -> close());
+        cancelBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+
+        HorizontalLayout buttonLayout = new HorizontalLayout(addItemBtn, saveBtn, cancelBtn);
+        buttonLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
+        buttonLayout.setSpacing(true);
+
+        mainLayout.add(buttonLayout);
+        add(mainLayout);
+    }
+
     /**
      * Toggle description visibility
      */
