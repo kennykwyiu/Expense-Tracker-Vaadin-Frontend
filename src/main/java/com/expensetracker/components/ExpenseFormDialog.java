@@ -46,6 +46,12 @@ public class ExpenseFormDialog extends Dialog {
     private boolean isEditMode = false;
     private boolean descriptionVisible = false;
 
+    /**
+     * Constructor for creating new expense
+     */
+    public ExpenseFormDialog() {
+        this(null);
+    }
 
     /**
      * Constructor for editing existing expense
