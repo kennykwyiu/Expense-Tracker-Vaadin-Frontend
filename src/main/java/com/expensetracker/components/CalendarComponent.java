@@ -21,5 +21,9 @@ import java.util.function.Consumer;
  * Displays a calendar grid with clickable days and daily expense totals.
  */
 public class CalendarComponent extends VerticalLayout {
+    private final YearMonth yearMonth;
+    private Consumer<LocalDate> onDaySelected;
+    private final Map<Integer, BigDecimal> dailyTotals = new HashMap<>();
+    private VerticalLayout calendarGrid;
 
 }
