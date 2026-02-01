@@ -26,4 +26,10 @@ public class CalendarComponent extends VerticalLayout {
     private final Map<Integer, BigDecimal> dailyTotals = new HashMap<>();
     private VerticalLayout calendarGrid;
 
+    /**
+     * Get daily total for a specific day.
+     */
+    public BigDecimal getDailyTotal(int day) {
+        return dailyTotals.getOrDefault(day, BigDecimal.ZERO);
+    }
 }
