@@ -170,6 +170,13 @@ public class CalendarComponent extends VerticalLayout {
         return cell;
     }
 
+    /**
+     * Set callback for day selection.
+     */
+    public void setOnDaySelected(Consumer<LocalDate> callback) {
+        this.onDaySelected = callback;
+    }
+
 
     /**
      * Clear all expense markers.
