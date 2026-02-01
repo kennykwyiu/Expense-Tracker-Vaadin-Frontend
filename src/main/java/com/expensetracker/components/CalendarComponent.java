@@ -47,6 +47,56 @@ public class CalendarComponent extends VerticalLayout {
         return layout;
     }
 
+    private void createCalendarGrid() {
+        calendarGrid.removeAll();
+
+        LocalDate firstDay = yearMonth.atDay(1);
+        int firstDayOfWeek = firstDay.getDayOfWeek().getValue() % 7; // 0 = Sunday
+        int daysInMonth = yearMonth.lengthOfMonth();
+
+        HorizontalLayout weekLayout = null;
+        int dayCounter = 0;
+
+        // Add empty cells for days before month starts
+        weekLayout = new HorizontalLayout();
+        weekLayout.setWidth("100%");
+        weekLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
+        weekLayout.setSpacing(true);
+
+        for (int i = 0; i < firstDayOfWeek; i++) {
+            Div emptyCell = createEmptyCell();
+            weekLayout.add(emptyCell);
+            dayCounter++;
+        }
+
+        // Add day cells
+        for (int day = 1; day <= daysInMonth; day++) {
+            if (dayCounter == 7) {
+                calendarGrid.add(weekLayout);
+                weekLayout = new HorizontalLayout();
+                weekLayout.setWidth("100%");
+                weekLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
+                weekLayout.setSpacing(true);
+                dayCounter = 0;
+            }
+
+            Div dayCell = createDayCell(day);
+            weekLayout.add(dayCell);
+            dayCounter++;
+        }
+
+        // Add remaining empty cells
+        while (dayCounter < 7) {
+            Div emptyCell = createEmptyCell();
+            weekLayout.add(emptyCell);
+            dayCounter++;
+        }
+
+        if (weekLayout.getComponentCount() > 0) {
+            calendarGrid.add(weekLayout);
+        }
+    }
+
     private Div createDayCell(int day) {
         Div cell = new Div();
         cell.setWidth("14.28%");
@@ -119,6 +169,7 @@ public class CalendarComponent extends VerticalLayout {
         cell.addClassNames(LumoUtility.BorderRadius.MEDIUM);
         return cell;
     }
+
 
     /**
      * Get daily total for a specific day.
