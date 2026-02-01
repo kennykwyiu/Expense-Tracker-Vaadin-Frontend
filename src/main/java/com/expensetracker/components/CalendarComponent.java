@@ -27,6 +27,27 @@ public class CalendarComponent extends VerticalLayout {
     private VerticalLayout calendarGrid;
 
 
+    private HorizontalLayout createDayNamesHeader() {
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setWidth("100%");
+        layout.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
+        layout.setSpacing(true);
+
+        String[] dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+        for (String dayName : dayNames) {
+            Span daySpan = new Span(dayName);
+            daySpan.addClassNames(
+                    LumoUtility.FontWeight.BOLD,
+                    LumoUtility.TextAlignment.CENTER,
+                    LumoUtility.Width.FULL
+            );
+            layout.add(daySpan);
+        }
+
+        return layout;
+    }
+
+
     private Div createEmptyCell() {
         Div cell = new Div();
         cell.setWidth("14.28%");
@@ -34,7 +55,6 @@ public class CalendarComponent extends VerticalLayout {
         cell.addClassNames(LumoUtility.BorderRadius.MEDIUM);
         return cell;
     }
-
 
     /**
      * Get daily total for a specific day.
