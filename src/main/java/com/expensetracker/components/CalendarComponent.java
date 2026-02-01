@@ -172,6 +172,14 @@ public class CalendarComponent extends VerticalLayout {
 
 
     /**
+     * Clear all expense markers.
+     */
+    public void clearExpenseMarkers() {
+        dailyTotals.clear();
+        createCalendarGrid();
+    }
+
+    /**
      * Get daily total for a specific day.
      */
     public BigDecimal getDailyTotal(int day) {
