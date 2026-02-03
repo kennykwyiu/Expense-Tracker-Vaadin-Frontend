@@ -177,6 +177,15 @@ public class CalendarComponent extends VerticalLayout {
         this.onDaySelected = callback;
     }
 
+    /**
+     * Mark multiple days with expenses and their totals.
+     * This method updates the daily totals and rebuilds the calendar grid to display them.
+     */
+    public void markDaysWithExpenses(Map<Integer, BigDecimal> dayTotals) {
+        this.dailyTotals.clear();
+        this.dailyTotals.putAll(dayTotals);
+        createCalendarGrid();
+    }
 
     /**
      * Clear all expense markers.
