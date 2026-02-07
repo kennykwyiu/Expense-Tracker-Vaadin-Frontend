@@ -27,6 +27,26 @@ public class CalendarComponent extends VerticalLayout {
     private VerticalLayout calendarGrid;
 
 
+    private void buildCalendar() {
+        removeAll();
+
+        // Header with month and year
+        Span monthYear = new Span(yearMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH) + " " + yearMonth.getYear());
+        monthYear.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.BOLD);
+        add(monthYear);
+
+        // Day names header
+        HorizontalLayout dayNamesLayout = createDayNamesHeader();
+        add(dayNamesLayout);
+
+        // Calendar grid
+        calendarGrid = new VerticalLayout();
+        calendarGrid.setSpacing(true);
+        calendarGrid.setWidth("100%");
+        createCalendarGrid();
+        add(calendarGrid);
+    }
+
     private HorizontalLayout createDayNamesHeader() {
         HorizontalLayout layout = new HorizontalLayout();
         layout.setWidth("100%");
