@@ -26,6 +26,13 @@ public class CalendarComponent extends VerticalLayout {
     private final Map<Integer, BigDecimal> dailyTotals = new HashMap<>();
     private VerticalLayout calendarGrid;
 
+    public CalendarComponent(YearMonth yearMonth) {
+        this.yearMonth = yearMonth;
+        setSpacing(true);
+        setPadding(true);
+        setWidth("100%");
+        buildCalendar();
+    }
 
     private void buildCalendar() {
         removeAll();
