@@ -38,6 +38,17 @@ import java.util.stream.Collectors;
 @Route(value = "expense", layout = MainView.class)
 @PageTitle("Expenses")
 public class ExpensesView extends VerticalLayout {
+    private final ApiClient apiClient;
+    private final Logger logger = new Logger(ExpensesView.class);
+
+    private YearMonth currentMonth;
+    private ListExpensesResponse currentData;
+
+    private final Grid<ExpenseResponse> expenseGrid;
+    private final Span totalSpan;
+    private VerticalLayout calendarContainer;
+    private CalendarComponent calendarComponent;
+
 
     private void showNotification(String message) {
         com.vaadin.flow.component.notification.Notification.show(message);
