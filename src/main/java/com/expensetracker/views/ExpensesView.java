@@ -49,6 +49,7 @@ public class ExpensesView extends VerticalLayout {
     private VerticalLayout calendarContainer;
     private CalendarComponent calendarComponent;
 
+
     private void updateTotal() {
         if (currentData != null && currentData.getTotal() != null) {
             totalSpan.setText("Total: " + currentData.getTotal());
@@ -63,6 +64,11 @@ public class ExpensesView extends VerticalLayout {
         }
         dialog.setOnSave(this::saveExpenses);
         dialog.open();
+    }
+
+    private void onDaySelected(LocalDate date) {
+        logger.info("Day selected: " + date);
+        openExpenseForm(date);
     }
 
 
