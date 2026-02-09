@@ -55,6 +55,17 @@ public class ExpensesView extends VerticalLayout {
         }
     }
 
+    private void openExpenseForm(LocalDate date) {
+        logger.info("Opening expense form");
+        ExpenseFormDialog dialog = new ExpenseFormDialog();
+        if (date != null) {
+            dialog.setDate(date);
+        }
+        dialog.setOnSave(this::saveExpenses);
+        dialog.open();
+    }
+
+
     private void showNotification(String message) {
         com.vaadin.flow.component.notification.Notification.show(message);
     }
