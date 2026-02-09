@@ -49,6 +49,11 @@ public class ExpensesView extends VerticalLayout {
     private VerticalLayout calendarContainer;
     private CalendarComponent calendarComponent;
 
+    private void updateTotal() {
+        if (currentData != null && currentData.getTotal() != null) {
+            totalSpan.setText("Total: " + currentData.getTotal());
+        }
+    }
 
     private void showNotification(String message) {
         com.vaadin.flow.component.notification.Notification.show(message);
