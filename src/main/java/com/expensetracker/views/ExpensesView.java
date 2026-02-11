@@ -71,6 +71,27 @@ public class ExpensesView extends VerticalLayout {
         openExpenseForm(date);
     }
 
+    private void saveExpenses(List<CreateExpenseRequest> expenses) {
+        try {
+            logger.info("Saving " + expenses.size() + " expenses");
+            if (expenses.size() == 1) {
+                apiClient.createExpense(
+                        expenses.get(0).getDate(),
+                        expenses.get(0).getAmount(),
+                        expenses.get(0).getCategory(),
+                        expenses.get(0).getDescription()
+                );
+            } else {
+                apiClient.batchCreateExpenses(expenses);
+            }
+            loadExpenses();
+            showNotification("Expense(s) saved successfully");
+        } catch (Exception e) {
+            logger.error("Error saving expenses: " + e.getMessage());
+            showNotification("Error saving expenses: " + e.getMessage());
+        }
+    }
+
 
     private void showNotification(String message) {
         com.vaadin.flow.component.notification.Notification.show(message);
