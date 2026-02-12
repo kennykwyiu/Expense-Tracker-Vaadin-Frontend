@@ -93,6 +93,31 @@ public class ExpensesView extends VerticalLayout {
     }
 
 
+    private void deleteExpense(ExpenseResponse expense) {
+        logger.info("Deleting expense ID: " + expense.getId());
+        Dialog confirmDialog = new Dialog();
+        confirmDialog.setHeaderTitle("Delete Expense");
+        confirmDialog.add(new Span("Are you sure you want to delete this expense?"));
+
+        Button deleteBtn = new Button("Delete", e -> {
+            try {
+                apiClient.deleteExpense(expense.getId());
+                loadExpenses();
+                showNotification("Expense deleted successfully");
+                confirmDialog.close();
+            } catch (Exception ex) {
+                logger.error("Error deleting expense: " + ex.getMessage());
+                showNotification("Error deleting expense: " + ex.getMessage());
+            }
+        });
+        deleteBtn.addThemeVariants(ButtonVariant.LUMO_ERROR);
+
+        Button cancelBtn = new Button("Cancel", e -> confirmDialog.close());
+
+        confirmDialog.getFooter().add(deleteBtn, cancelBtn);
+        confirmDialog.open();
+    }
+
     private void showNotification(String message) {
         com.vaadin.flow.component.notification.Notification.show(message);
     }
