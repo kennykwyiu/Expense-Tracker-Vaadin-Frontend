@@ -49,6 +49,38 @@ public class ExpensesView extends VerticalLayout {
     private VerticalLayout calendarContainer;
     private CalendarComponent calendarComponent;
 
+    private void renderCalendar() {
+        // Remove old calendar component
+        calendarContainer.removeAll();
+
+        // Create new calendar component for the current month
+        calendarComponent = new CalendarComponent(currentMonth);
+        calendarComponent.setOnDaySelected(this::onDaySelected);
+
+        if (currentData != null && currentData.getExpenses() != null && !currentData.getExpenses().isEmpty()) {
+            // Calculate daily totals from expenses
+            java.util.Map<Integer, BigDecimal> dayTotals = new java.util.HashMap<>();
+            for (ExpenseResponse expense : currentData.getExpenses()) {
+                int day = expense.getDate().getDayOfMonth();
+                BigDecimal currentTotal = dayTotals.getOrDefault(day, BigDecimal.ZERO);
+                BigDecimal newTotal = currentTotal.add(expense.getAmount());
+                dayTotals.put(day, newTotal);
+                logger.info("Day " + day + ": " + expense.getAmount() + " -> Total: " + newTotal);
+            }
+
+            // Mark days with expenses and their totals
+            logger.info("Marking " + dayTotals.size() + " days with expenses");
+            for (java.util.Map.Entry<Integer, BigDecimal> entry : dayTotals.entrySet()) {
+                logger.info("  Day " + entry.getKey() + ": $" + entry.getValue());
+            }
+            calendarComponent.markDaysWithExpenses(dayTotals);
+        } else {
+            logger.info("No expenses found for " + currentMonth);
+        }
+
+        // Add the calendar to the container
+        calendarContainer.add(calendarComponent);
+    }
 
     private void updateTotal() {
         if (currentData != null && currentData.getTotal() != null) {
@@ -92,6 +124,23 @@ public class ExpensesView extends VerticalLayout {
         }
     }
 
+    private void editExpense(ExpenseResponse expense) {
+        logger.info("Editing expense ID: " + expense.getId());
+        try {
+            ExpenseFormDialog dialog = new ExpenseFormDialog(expense.getId());
+            dialog.setExpenseData(
+                    expense.getDate(),
+                    expense.getAmount(),
+                    expense.getCategory(),
+                    expense.getDescription()
+            );
+            dialog.setOnSave(this::saveExpenses);
+            dialog.open();
+        } catch (Exception e) {
+            logger.error("Error opening edit form: " + e.getMessage());
+            showNotification("Error opening edit form: " + e.getMessage());
+        }
+    }
 
     private void deleteExpense(ExpenseResponse expense) {
         logger.info("Deleting expense ID: " + expense.getId());
