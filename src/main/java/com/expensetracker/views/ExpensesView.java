@@ -49,6 +49,22 @@ public class ExpensesView extends VerticalLayout {
     private VerticalLayout calendarContainer;
     private CalendarComponent calendarComponent;
 
+    private void loadExpenses() {
+        try {
+            logger.info("Loading expenses for " + currentMonth);
+            currentData = apiClient.listExpenses(currentMonth.getYear(), currentMonth.getMonthValue());
+
+            if (currentData != null) {
+                expenseGrid.setItems(currentData.getExpenses());
+                updateTotal();
+                renderCalendar();
+            }
+        } catch (Exception e) {
+            logger.error("Error loading expenses: " + e.getMessage());
+            showNotification("Error loading expenses: " + e.getMessage());
+        }
+    }
+
     private void renderCalendar() {
         // Remove old calendar component
         calendarContainer.removeAll();
