@@ -49,6 +49,32 @@ public class ExpensesView extends VerticalLayout {
     private VerticalLayout calendarContainer;
     private CalendarComponent calendarComponent;
 
+    private Grid<ExpenseResponse> createExpenseGrid() {
+        Grid<ExpenseResponse> grid = new Grid<>(ExpenseResponse.class, false);
+        grid.setWidth("100%");
+
+        grid.addColumn(expense -> expense.getDate().toString()).setHeader("Date").setFlexGrow(1);
+        grid.addColumn(expense -> "$" + String.format("%.2f", expense.getAmount())).setHeader("Amount").setFlexGrow(1);
+        grid.addColumn(ExpenseResponse::getCategory).setHeader("Category").setFlexGrow(1);
+        grid.addColumn(ExpenseResponse::getDescription).setHeader("Description").setFlexGrow(1);
+
+        grid.addComponentColumn(expense -> {
+            Button editBtn = new Button("Edit", VaadinIcon.EDIT.create());
+            editBtn.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
+            editBtn.addClickListener(e -> editExpense(expense));
+
+            Button deleteBtn = new Button("Delete", VaadinIcon.TRASH.create());
+            deleteBtn.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_ERROR);
+            deleteBtn.addClickListener(e -> deleteExpense(expense));
+
+            HorizontalLayout actions = new HorizontalLayout(editBtn, deleteBtn);
+            actions.setSpacing(true);
+            return actions;
+        }).setHeader("Actions").setWidth("150px");
+
+        return grid;
+    }
+
     private void loadExpenses() {
         try {
             logger.info("Loading expenses for " + currentMonth);
