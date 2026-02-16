@@ -49,6 +49,24 @@ public class ExpensesView extends VerticalLayout {
     private VerticalLayout calendarContainer;
     private CalendarComponent calendarComponent;
 
+    private Tabs createTabs() {
+        Tab calendarTab = new Tab("Calendar");
+        Tab listTab = new Tab("List");
+
+        Tabs tabs = new Tabs(calendarTab, listTab);
+        tabs.addSelectedChangeListener(e -> {
+            if (e.getSelectedTab() == calendarTab) {
+                calendarContainer.setVisible(true);
+                expenseGrid.setVisible(false);
+            } else {
+                calendarContainer.setVisible(false);
+                expenseGrid.setVisible(true);
+            }
+        });
+
+        return tabs;
+    }
+
     private Grid<ExpenseResponse> createExpenseGrid() {
         Grid<ExpenseResponse> grid = new Grid<>(ExpenseResponse.class, false);
         grid.setWidth("100%");
