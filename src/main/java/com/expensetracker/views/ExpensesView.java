@@ -49,6 +49,36 @@ public class ExpensesView extends VerticalLayout {
     private VerticalLayout calendarContainer;
     private CalendarComponent calendarComponent;
 
+    private HorizontalLayout createMonthPicker() {
+        ComboBox<String> monthCombo = new ComboBox<>();
+        monthCombo.setLabel("Month");
+        monthCombo.setItems("January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December");
+        monthCombo.setValue(currentMonth.getMonth().toString());
+        monthCombo.addValueChangeListener(e -> {
+            int monthIndex = monthCombo.getListDataView().getItems().collect(Collectors.toList()).indexOf(e.getValue()) + 1;
+            currentMonth = YearMonth.of(currentMonth.getYear(), monthIndex);
+            loadExpenses();
+        });
+
+        ComboBox<Integer> yearCombo = new ComboBox<>();
+        yearCombo.setLabel("Year");
+        List<Integer> years = new ArrayList<>();
+        for (int i = 2020; i <= 2030; i++) {
+            years.add(i);
+        }
+        yearCombo.setItems(years);
+        yearCombo.setValue(currentMonth.getYear());
+        yearCombo.addValueChangeListener(e -> {
+            currentMonth = YearMonth.of(e.getValue(), currentMonth.getMonthValue());
+            loadExpenses();
+        });
+
+        HorizontalLayout layout = new HorizontalLayout(monthCombo, yearCombo);
+        layout.setSpacing(true);
+        return layout;
+    }
+
     private Tabs createTabs() {
         Tab calendarTab = new Tab("Calendar");
         Tab listTab = new Tab("List");
