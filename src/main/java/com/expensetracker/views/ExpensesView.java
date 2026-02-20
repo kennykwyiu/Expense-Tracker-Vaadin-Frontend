@@ -49,6 +49,12 @@ public class ExpensesView extends VerticalLayout {
     private VerticalLayout calendarContainer;
     private CalendarComponent calendarComponent;
 
+    private H2 createHeader() {
+        H2 title = new H2("Daily Expenses");
+        title.addClassNames(LumoUtility.Margin.MEDIUM);
+        return title;
+    }
+
     private HorizontalLayout createMonthPicker() {
         ComboBox<String> monthCombo = new ComboBox<>();
         monthCombo.setLabel("Month");
