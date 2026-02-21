@@ -49,6 +49,50 @@ public class ExpensesView extends VerticalLayout {
     private VerticalLayout calendarContainer;
     private CalendarComponent calendarComponent;
 
+    public ExpensesView(ApiClient apiClient) {
+        this.apiClient = apiClient;
+        this.currentMonth = YearMonth.now();
+
+        setSpacing(true);
+        setPadding(true);
+
+        // Header
+        add(createHeader());
+
+        // Month/Year Picker
+        add(createMonthPicker());
+
+        // Tabs for Calendar and List views
+        Tabs tabs = createTabs();
+        add(tabs);
+
+        // Calendar Container (will hold the calendar component)
+        calendarContainer = new VerticalLayout();
+        calendarContainer.setSpacing(true);
+        calendarContainer.setPadding(false);
+        calendarContainer.setWidth("100%");
+        add(calendarContainer);
+
+        // Grid for list view
+        expenseGrid = createExpenseGrid();
+        expenseGrid.setVisible(false);
+        add(expenseGrid);
+
+        // Total Span
+        totalSpan = new Span();
+        totalSpan.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.BOLD);
+        add(totalSpan);
+
+        // Add Expense Button
+        Button addExpenseBtn = new Button("Add Expense", VaadinIcon.PLUS.create());
+        addExpenseBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        addExpenseBtn.addClickListener(e -> openExpenseForm(null));
+        add(addExpenseBtn);
+
+        // Load initial data
+        loadExpenses();
+    }
+
     private H2 createHeader() {
         H2 title = new H2("Daily Expenses");
         title.addClassNames(LumoUtility.Margin.MEDIUM);
