@@ -17,4 +17,12 @@ public class MainView extends AppLayout {
 
     public MainView() {
     }
+
+    private void createHeader() {
+        var toggle = new DrawerToggle();
+        var title = new H1("Daily Expense Tracker");
+        title.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.MEDIUM);
+
+        addToNavbar(toggle, title);
+    }
 }
