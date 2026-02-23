@@ -25,4 +25,13 @@ public class MainView extends AppLayout {
 
         addToNavbar(toggle, title);
     }
+
+    private void createDrawer() {
+        var nav = new SideNav();
+
+        var expensesItem = new SideNavItem("Expenses", ExpensesView.class, VaadinIcon.WALLET.create());
+        nav.addItem(expensesItem);
+
+        addToDrawer(nav);
+    }
 }
