@@ -16,6 +16,8 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 public class MainView extends AppLayout {
 
     public MainView() {
+        createHeader();
+        createDrawer();
     }
 
     private void createHeader() {
