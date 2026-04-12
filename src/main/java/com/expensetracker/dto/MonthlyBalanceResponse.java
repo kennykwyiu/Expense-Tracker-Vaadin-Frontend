@@ -23,4 +23,27 @@ public class MonthlyBalanceResponse {
     private String createdAt;
     private String updatedAt;
 
+    /**
+     * Default constructor.
+     */
+    public MonthlyBalanceResponse() {
+    }
+
+    /**
+     * Constructor with all fields.
+     */
+    public MonthlyBalanceResponse(Integer id, Integer userId, Integer year, Integer month,
+                                  BigDecimal lastMonthBalance, BigDecimal incomeThisWeek,
+                                  BigDecimal expenseBudget, BigDecimal currentBalance,
+                                  String createdAt, String updatedAt) {
+        this.id = id;
+        this.year = year;
+        this.month = month;
+        this.lastMonthBalance = lastMonthBalance;
+        this.incomeThisWeek = incomeThisWeek;
+        this.expenseBudget = expenseBudget;
+        this.currentBalance = currentBalance;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }
