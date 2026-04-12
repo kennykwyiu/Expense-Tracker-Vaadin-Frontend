@@ -46,4 +46,19 @@ public class MonthlyBalanceResponse {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+    @Override
+    public String toString() {
+        return "MonthlyBalanceResponse{" +
+                "id=" + id +
+                ", year=" + year +
+                ", month=" + month +
+                ", lastMonthBalance=" + lastMonthBalance +
+                ", incomeThisWeek=" + incomeThisWeek +
+                ", expenseBudget=" + expenseBudget +
+                ", currentBalance=" + currentBalance +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }
