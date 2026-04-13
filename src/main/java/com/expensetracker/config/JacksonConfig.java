@@ -11,6 +11,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class JacksonConfig {
+    /**
+     * Configure ObjectMapper to support Java 8 date/time types.
+     * This bean ensures that Jackson can properly handle LocalDateTime, LocalDate, LocalTime, etc.
+     */
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
