@@ -1,10 +1,15 @@
 package com.expensetracker.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 /**
  * DTO for updating Monthly Balance via API.
  * Used to send balance update requests to the backend.
  */
+@Setter
+@Getter
 public class UpdateMonthlyBalanceRequest {
     private BigDecimal lastMonthBalance;
     private BigDecimal incomeThisWeek;
@@ -28,30 +33,6 @@ public class UpdateMonthlyBalanceRequest {
     }
 
     // Getters and Setters
-
-    public BigDecimal getLastMonthBalance() {
-        return lastMonthBalance;
-    }
-
-    public void setLastMonthBalance(BigDecimal lastMonthBalance) {
-        this.lastMonthBalance = lastMonthBalance;
-    }
-
-    public BigDecimal getIncomeThisWeek() {
-        return incomeThisWeek;
-    }
-
-    public void setIncomeThisWeek(BigDecimal incomeThisWeek) {
-        this.incomeThisWeek = incomeThisWeek;
-    }
-
-    public BigDecimal getExpenseBudget() {
-        return expenseBudget;
-    }
-
-    public void setExpenseBudget(BigDecimal expenseBudget) {
-        this.expenseBudget = expenseBudget;
-    }
 
     @Override
     public String toString() {
