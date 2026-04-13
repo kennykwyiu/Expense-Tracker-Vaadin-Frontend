@@ -52,4 +52,13 @@ public class UpdateMonthlyBalanceRequest {
     public void setExpenseBudget(BigDecimal expenseBudget) {
         this.expenseBudget = expenseBudget;
     }
+
+    @Override
+    public String toString() {
+        return "UpdateMonthlyBalanceRequest{" +
+                "lastMonthBalance=" + lastMonthBalance +
+                ", incomeThisWeek=" + incomeThisWeek +
+                ", expenseBudget=" + expenseBudget +
+                '}';
+    }
 }
