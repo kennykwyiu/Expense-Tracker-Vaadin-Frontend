@@ -108,4 +108,14 @@ public class BalanceSummaryCard extends Div {
         dialog.add(form, buttons);
         dialog.open();
     }
+
+    /**
+     * Format BigDecimal as currency string
+     */
+    private String formatCurrency(BigDecimal amount) {
+        if (amount == null) {
+            return "$0.00";
+        }
+        return String.format("$%.2f", amount);
+    }
 }
