@@ -38,6 +38,12 @@ public class BalanceSummaryCard extends Div {
     private Consumer<BigDecimal> onBudgetUpdate;
 
     private MonthlyBalanceResponse currentBalance;
+
+
+    public BalanceSummaryCard() {
+        logger.info("Initializing BalanceSummaryCard");
+    }
+
     /**
      * Open dialog to add income
      */
