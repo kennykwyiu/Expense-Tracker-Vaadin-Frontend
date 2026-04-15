@@ -49,6 +49,10 @@ public class BalanceSummaryCard extends Div {
                 LumoUtility.BorderRadius.MEDIUM
         );
         getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
+
+        // Title
+        Span title = new Span("Monthly Balance Summary");
+        title.addClassNames(LumoUtility.FontWeight.BOLD, LumoUtility.FontSize.LARGE);
     }
 
     /**
