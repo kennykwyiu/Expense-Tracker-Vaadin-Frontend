@@ -59,6 +59,16 @@ public class BalanceSummaryCard extends Div {
         VerticalLayout content = new VerticalLayout();
         content.setSpacing(true);
         content.setPadding(false);
+        
+        // Last month balance row
+        HorizontalLayout lastMonthRow = new HorizontalLayout();
+        lastMonthRow.setWidthFull();
+        lastMonthRow.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
+        Span lastMonthLabel = new Span("Last Month Balance:");
+        lastMonthLabel.addClassNames(LumoUtility.FontWeight.SEMIBOLD);
+        lastMonthBalanceLabel.setText("$0.00");
+        lastMonthBalanceLabel.addClassNames(LumoUtility.TextColor.SUCCESS);
+        lastMonthRow.add(lastMonthLabel, lastMonthBalanceLabel);
     }
 
     /**
