@@ -71,4 +71,41 @@ public class BalanceSummaryCard extends Div {
         dialog.add(form, buttons);
         dialog.open();
     }
+
+    /**
+     * Open dialog to edit budget
+     */
+    private void openEditBudgetDialog() {
+        logger.info("Opening edit budget dialog");
+
+        Dialog dialog = new Dialog();
+        dialog.setHeaderTitle("Edit Expense Budget");
+        dialog.setWidth("400px");
+
+        FormLayout form = new FormLayout();
+        BigDecimalField budgetField = new BigDecimalField("Monthly Budget");
+//        budgetField.setMin(0);
+        budgetField.setHelperText("Enter monthly expense budget");
+        if (currentBalance != null && currentBalance.getExpenseBudget() != null) {
+            budgetField.setValue(currentBalance.getExpenseBudget());
+        }
+        form.add(budgetField);
+
+        Button saveBtn = new Button("Save", e -> {
+            if (budgetField.getValue() != null && onBudgetUpdate != null) {
+                logger.info("Updating budget: " + budgetField.getValue());
+                onBudgetUpdate.accept(budgetField.getValue());
+                dialog.close();
+            }
+        });
+        saveBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
+        Button cancelBtn = new Button("Cancel", e -> dialog.close());
+
+        HorizontalLayout buttons = new HorizontalLayout(saveBtn, cancelBtn);
+        buttons.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
+
+        dialog.add(form, buttons);
+        dialog.open();
+    }
 }
