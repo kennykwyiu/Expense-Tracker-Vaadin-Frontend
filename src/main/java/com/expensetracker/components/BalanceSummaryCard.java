@@ -11,6 +11,7 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.component.textfield.BigDecimalField;
 import com.vaadin.flow.theme.lumo.LumoUtility;
@@ -53,6 +54,11 @@ public class BalanceSummaryCard extends Div {
         // Title
         Span title = new Span("Monthly Balance Summary");
         title.addClassNames(LumoUtility.FontWeight.BOLD, LumoUtility.FontSize.LARGE);
+
+        // Content layout
+        VerticalLayout content = new VerticalLayout();
+        content.setSpacing(true);
+        content.setPadding(false);
     }
 
     /**
