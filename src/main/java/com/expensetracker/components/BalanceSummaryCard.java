@@ -69,6 +69,26 @@ public class BalanceSummaryCard extends Div {
         lastMonthBalanceLabel.setText("$0.00");
         lastMonthBalanceLabel.addClassNames(LumoUtility.TextColor.SUCCESS);
         lastMonthRow.add(lastMonthLabel, lastMonthBalanceLabel);
+        
+        // Income this week row
+        HorizontalLayout incomeRow = new HorizontalLayout();
+        incomeRow.setWidthFull();
+        incomeRow.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
+        incomeRow.setAlignItems(FlexComponent.Alignment.CENTER);
+        Span incomeLabel = new Span("Income This Week:");
+        incomeLabel.addClassNames(LumoUtility.FontWeight.SEMIBOLD);
+        
+        HorizontalLayout incomeContent = new HorizontalLayout();
+        incomeContent.setAlignItems(FlexComponent.Alignment.CENTER);
+        incomeThisWeekLabel.setText("$0.00");
+        incomeThisWeekLabel.addClassNames(LumoUtility.TextColor.SUCCESS);
+        
+        addIncomeBtn.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
+        addIncomeBtn.setTooltipText("Add income");
+        addIncomeBtn.addClickListener(e -> openAddIncomeDialog());
+        
+        incomeContent.add(incomeThisWeekLabel, addIncomeBtn);
+        incomeRow.add(incomeLabel, incomeContent);
     }
 
     /**
