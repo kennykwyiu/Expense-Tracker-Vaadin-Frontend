@@ -13,6 +13,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
 import com.vaadin.flow.component.textfield.BigDecimalField;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 
 import java.math.BigDecimal;
 import java.util.function.Consumer;
@@ -42,6 +43,12 @@ public class BalanceSummaryCard extends Div {
 
     public BalanceSummaryCard() {
         logger.info("Initializing BalanceSummaryCard");
+        addClassNames(
+                LumoUtility.Padding.MEDIUM,
+                LumoUtility.Background.CONTRAST_5,
+                LumoUtility.BorderRadius.MEDIUM
+        );
+        getStyle().set("border", "1px solid var(--lumo-contrast-20pct)");
     }
 
     /**
