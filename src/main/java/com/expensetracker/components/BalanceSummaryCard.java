@@ -130,6 +130,17 @@ public class BalanceSummaryCard extends Div {
         currentBalanceLabel.setText("$0.00");
         currentBalanceLabel.addClassNames(LumoUtility.FontWeight.BOLD, LumoUtility.FontSize.MEDIUM);
         balanceRow.add(balanceLabel, currentBalanceLabel);
+        
+        // Add all rows to content
+        content.add(
+                lastMonthRow,
+                incomeRow,
+                budgetRow,
+                budgetProgressBar,
+                balanceRow
+        );
+        
+        add(title, content);
     }
 
     /**
