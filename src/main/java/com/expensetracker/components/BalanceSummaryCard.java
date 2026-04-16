@@ -115,6 +115,21 @@ public class BalanceSummaryCard extends Div {
         budgetProgressBar.setMin(0);
         budgetProgressBar.setMax(100);
         budgetProgressBar.setValue(0);
+        
+        // Current balance row (highlighted)
+        HorizontalLayout balanceRow = new HorizontalLayout();
+        balanceRow.setWidthFull();
+        balanceRow.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
+        balanceRow.addClassNames(
+                LumoUtility.Padding.SMALL,
+                LumoUtility.Background.CONTRAST_10,
+                LumoUtility.BorderRadius.SMALL
+        );
+        Span balanceLabel = new Span("Current Balance:");
+        balanceLabel.addClassNames(LumoUtility.FontWeight.BOLD, LumoUtility.FontSize.MEDIUM);
+        currentBalanceLabel.setText("$0.00");
+        currentBalanceLabel.addClassNames(LumoUtility.FontWeight.BOLD, LumoUtility.FontSize.MEDIUM);
+        balanceRow.add(balanceLabel, currentBalanceLabel);
     }
 
     /**
