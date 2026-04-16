@@ -147,8 +147,12 @@ public class BalanceSummaryCard extends Div {
      */
     public void updateBalance(MonthlyBalanceResponse balance) {
         logger.info("Updating balance display");
-    }
-
+        this.currentBalance = balance;
+        
+        if (balance == null) {
+            logger.warn("Balance is null");
+            return;
+        }
     /**
      * Open dialog to add income
      */
