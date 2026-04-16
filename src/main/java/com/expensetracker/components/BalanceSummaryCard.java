@@ -89,6 +89,26 @@ public class BalanceSummaryCard extends Div {
         
         incomeContent.add(incomeThisWeekLabel, addIncomeBtn);
         incomeRow.add(incomeLabel, incomeContent);
+        
+        // Expense budget row
+        HorizontalLayout budgetRow = new HorizontalLayout();
+        budgetRow.setWidthFull();
+        budgetRow.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
+        budgetRow.setAlignItems(FlexComponent.Alignment.CENTER);
+        Span budgetLabel = new Span("Expense Budget:");
+        budgetLabel.addClassNames(LumoUtility.FontWeight.SEMIBOLD);
+        
+        HorizontalLayout budgetContent = new HorizontalLayout();
+        budgetContent.setAlignItems(FlexComponent.Alignment.CENTER);
+        expenseBudgetLabel.setText("$0.00");
+        expenseBudgetLabel.addClassNames(LumoUtility.TextColor.WARNING);
+        
+        editBudgetBtn.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
+        editBudgetBtn.setTooltipText("Edit budget");
+        editBudgetBtn.addClickListener(e -> openEditBudgetDialog());
+        
+        budgetContent.add(expenseBudgetLabel, editBudgetBtn);
+        budgetRow.add(budgetLabel, budgetContent);
     }
 
     /**
