@@ -109,6 +109,12 @@ public class BalanceSummaryCard extends Div {
         
         budgetContent.add(expenseBudgetLabel, editBudgetBtn);
         budgetRow.add(budgetLabel, budgetContent);
+        
+        // Progress bar
+        budgetProgressBar.setWidth("100%");
+        budgetProgressBar.setMin(0);
+        budgetProgressBar.setMax(100);
+        budgetProgressBar.setValue(0);
     }
 
     /**
