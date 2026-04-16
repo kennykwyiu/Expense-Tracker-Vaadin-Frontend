@@ -142,6 +142,12 @@ public class BalanceSummaryCard extends Div {
         
         add(title, content);
     }
+    /**
+     * Update balance display with data
+     */
+    public void updateBalance(MonthlyBalanceResponse balance) {
+        logger.info("Updating balance display");
+    }
 
     /**
      * Open dialog to add income
