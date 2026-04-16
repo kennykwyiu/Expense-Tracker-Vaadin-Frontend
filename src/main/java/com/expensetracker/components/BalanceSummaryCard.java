@@ -142,17 +142,27 @@ public class BalanceSummaryCard extends Div {
         
         add(title, content);
     }
+
     /**
      * Update balance display with data
      */
     public void updateBalance(MonthlyBalanceResponse balance) {
         logger.info("Updating balance display");
         this.currentBalance = balance;
-        
+
         if (balance == null) {
             logger.warn("Balance is null");
             return;
         }
+
+        // Update labels
+        lastMonthBalanceLabel.setText(formatCurrency(balance.getLastMonthBalance()));
+        incomeThisWeekLabel.setText(formatCurrency(balance.getIncomeThisWeek()));
+        expenseBudgetLabel.setText(formatCurrency(balance.getExpenseBudget()));
+        currentBalanceLabel.setText(formatCurrency(balance.getCurrentBalance()));
+
+    }
+
     /**
      * Open dialog to add income
      */
