@@ -268,4 +268,10 @@ public class BalanceSummaryCard extends Div {
         }
         return String.format("$%.2f", amount);
     }
+    /**
+     * Set callback for income update
+     */
+    public void setOnIncomeUpdate(Consumer<BigDecimal> callback) {
+        this.onIncomeUpdate = callback;
+    }
 }
