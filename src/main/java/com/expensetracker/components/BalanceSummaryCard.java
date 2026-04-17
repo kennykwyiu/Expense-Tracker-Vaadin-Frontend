@@ -161,6 +161,11 @@ public class BalanceSummaryCard extends Div {
         expenseBudgetLabel.setText(formatCurrency(balance.getExpenseBudget()));
         currentBalanceLabel.setText(formatCurrency(balance.getCurrentBalance()));
 
+        // Update progress bar (budget usage percentage)
+        if (balance.getExpenseBudget() != null && balance.getExpenseBudget().compareTo(BigDecimal.ZERO) > 0) {
+
+        }
+
     }
 
     /**
