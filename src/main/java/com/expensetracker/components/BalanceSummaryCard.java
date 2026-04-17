@@ -173,6 +173,8 @@ public class BalanceSummaryCard extends Div {
             } else {
                 budgetProgressBar.getStyle().set("--lumo-progress-value-background-color", "var(--lumo-success-color)");
             }
+        } else {
+            budgetProgressBar.setValue(0);
         }
 
     }
