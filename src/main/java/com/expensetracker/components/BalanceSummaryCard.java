@@ -274,4 +274,11 @@ public class BalanceSummaryCard extends Div {
     public void setOnIncomeUpdate(Consumer<BigDecimal> callback) {
         this.onIncomeUpdate = callback;
     }
+    
+    /**
+     * Set callback for budget update
+     */
+    public void setOnBudgetUpdate(Consumer<BigDecimal> callback) {
+        this.onBudgetUpdate = callback;
+    }
 }
