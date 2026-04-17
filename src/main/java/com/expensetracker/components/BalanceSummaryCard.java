@@ -165,6 +165,14 @@ public class BalanceSummaryCard extends Div {
             double percentage = balance.getExpenseBudget().doubleValue() / balance.getExpenseBudget().doubleValue() * 100;
             budgetProgressBar.setValue(Math.min(percentage / 100, 1.0)); // Cap at 100%
             
+            // Update color based on usage
+            if (percentage >= 100) {
+                budgetProgressBar.getStyle().set("--lumo-progress-value-background-color", "var(--lumo-error-color)");
+            } else if (percentage >= 80) {
+                budgetProgressBar.getStyle().set("--lumo-progress-value-background-color", "var(--lumo-warning-color)");
+            } else {
+                budgetProgressBar.getStyle().set("--lumo-progress-value-background-color", "var(--lumo-success-color)");
+            }
         }
 
     }
