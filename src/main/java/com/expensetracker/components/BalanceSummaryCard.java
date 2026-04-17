@@ -164,7 +164,7 @@ public class BalanceSummaryCard extends Div {
         if (balance.getExpenseBudget() != null && balance.getExpenseBudget().compareTo(BigDecimal.ZERO) > 0) {
             double percentage = balance.getExpenseBudget().doubleValue() / balance.getExpenseBudget().doubleValue() * 100;
             budgetProgressBar.setValue(Math.min(percentage / 100, 1.0)); // Cap at 100%
-            
+
             // Update color based on usage
             if (percentage >= 100) {
                 budgetProgressBar.getStyle().set("--lumo-progress-value-background-color", "var(--lumo-error-color)");
@@ -176,7 +176,16 @@ public class BalanceSummaryCard extends Div {
         } else {
             budgetProgressBar.setValue(0);
         }
-
+        // Update balance color
+        if (balance.getCurrentBalance() != null) {
+            if (balance.getCurrentBalance().compareTo(BigDecimal.ZERO) < 0) {
+                currentBalanceLabel.removeClassNames(LumoUtility.TextColor.SUCCESS);
+                currentBalanceLabel.addClassNames(LumoUtility.TextColor.ERROR);
+            } else {
+                currentBalanceLabel.removeClassNames(LumoUtility.TextColor.ERROR);
+                currentBalanceLabel.addClassNames(LumoUtility.TextColor.SUCCESS);
+            }
+        }
     }
 
     /**
