@@ -1,5 +1,6 @@
 package com.expensetracker.service;
 
+import com.expensetracker.dto.MonthlyBalanceResponse;
 import com.expensetracker.util.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Value;
@@ -19,4 +20,12 @@ public class BalanceService {
 
     @Value("${backend.api.url:http://localhost:8080/api}")
     private String backendApiUrl;
+    
+    /**
+     * Get monthly balance for user
+     */
+    public MonthlyBalanceResponse getMonthlyBalance(Integer year, Integer month) throws Exception {
+        logger.info("Getting monthly balance for " + year + "-" + month);
+
+    }
 }
