@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Value;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -46,5 +47,13 @@ public class BalanceService {
             logger.error("Failed to get balance. Status: " + response.statusCode());
             throw new Exception("Failed to get balance: " + response.statusCode());
         }
+    }
+    
+    /**
+     * Create monthly balance record
+     */
+    public MonthlyBalanceResponse createMonthlyBalance(Integer year, Integer month,
+                                                       BigDecimal lastMonthBalance, BigDecimal expenseBudget) throws Exception {
+        logger.info("Creating monthly balance for " + year + "-" + month);
     }
 }
