@@ -88,7 +88,13 @@ public class BalanceService {
                 .build();
         
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        
 
+        if (response.statusCode() == 200) {
+            logger.info("Income updated successfully");
+            return objectMapper.readValue(response.body(), MonthlyBalanceResponse.class);
+        } else {
+            logger.error("Failed to update income. Status: " + response.statusCode());
+            throw new Exception("Failed to update income: " + response.statusCode());
+        }
     }
 }
