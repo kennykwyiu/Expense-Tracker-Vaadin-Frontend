@@ -77,6 +77,9 @@ public class BalanceService {
         }
     }
 
+    /**
+     * Update income for the week
+     */
     public MonthlyBalanceResponse updateIncomeThisWeek(Integer year, Integer month, BigDecimal income) throws Exception {
         logger.info("Updating income for " + year + "-" + month + ": " + income);
 
