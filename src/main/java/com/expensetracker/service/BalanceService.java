@@ -80,5 +80,15 @@ public class BalanceService {
     public MonthlyBalanceResponse updateIncomeThisWeek(Integer year, Integer month, BigDecimal income) throws Exception {
         logger.info("Updating income for " + year + "-" + month + ": " + income);
 
+        String url = backendApiUrl + "/balance/" + year + "/" + month + "/income?income=" + income;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .PUT(HttpRequest.BodyPublishers.noBody())
+                .header("Content-Type", "application/json")
+                .build();
+        
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        
+
     }
 }
