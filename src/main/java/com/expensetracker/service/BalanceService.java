@@ -55,5 +55,30 @@ public class BalanceService {
     public MonthlyBalanceResponse createMonthlyBalance(Integer year, Integer month,
                                                        BigDecimal lastMonthBalance, BigDecimal expenseBudget) throws Exception {
         logger.info("Creating monthly balance for " + year + "-" + month);
+        
+        String url = backendApiUrl + "/balance?year=" + year + "&month=" + month +
+                "&lastMonthBalance=" + (lastMonthBalance != null ? lastMonthBalance : 0) +
+                "&expenseBudget=" + (expenseBudget != null ? expenseBudget : 0);
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .header("Content-Type", "application/json")
+                .build();
+        
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        if (response.statusCode() == 201) {
+            logger.info("Balance created successfully");
+            return objectMapper.readValue(response.body(), MonthlyBalanceResponse.class);
+        } else {
+            logger.error("Failed to create balance. Status: " + response.statusCode());
+            throw new Exception("Failed to create balance: " + response.statusCode());
+        }
+    }
+
+    public MonthlyBalanceResponse updateIncomeThisWeek(Integer year, Integer month, BigDecimal income) throws Exception {
+        logger.info("Updating income for " + year + "-" + month + ": " + income);
+
     }
 }
