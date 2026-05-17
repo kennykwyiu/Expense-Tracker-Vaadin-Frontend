@@ -100,4 +100,29 @@ public class BalanceService {
             throw new Exception("Failed to update income: " + response.statusCode());
         }
     }
+    
+    /**
+     * Update expense budget
+     */
+    public MonthlyBalanceResponse updateExpenseBudget(Integer year, Integer month, BigDecimal budget) throws Exception {
+        logger.info("Updating budget for " + year + "-" + month + ": " + budget);
+        
+        String url = backendApiUrl + "/balance/" + year + "/" + month + "/budget?budget=" + budget;
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .PUT(HttpRequest.BodyPublishers.noBody())
+                .header("Content-Type", "application/json")
+                .build();
+        
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        if (response.statusCode() == 200) {
+            logger.info("Budget updated successfully");
+            return objectMapper.readValue(response.body(), MonthlyBalanceResponse.class);
+        } else {
+            logger.error("Failed to update budget. Status: " + response.statusCode());
+            throw new Exception("Failed to update budget: " + response.statusCode());
+        }
+    }
 }
