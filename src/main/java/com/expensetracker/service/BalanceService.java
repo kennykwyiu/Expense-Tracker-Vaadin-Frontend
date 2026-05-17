@@ -1,6 +1,7 @@
 package com.expensetracker.service;
 
 import com.expensetracker.dto.MonthlyBalanceResponse;
+import com.expensetracker.dto.UpdateMonthlyBalanceRequest;
 import com.expensetracker.util.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Value;
@@ -123,6 +124,33 @@ public class BalanceService {
         } else {
             logger.error("Failed to update budget. Status: " + response.statusCode());
             throw new Exception("Failed to update budget: " + response.statusCode());
+        }
+    }
+    
+    /**
+     * Update multiple balance fields
+     */
+    public MonthlyBalanceResponse updateMonthlyBalance(Integer year, Integer month, 
+                                                       UpdateMonthlyBalanceRequest request) throws Exception {
+        logger.info("Updating balance for " + year + "-" + month);
+        
+        String url = backendApiUrl + "/balance/" + year + "/" + month;
+        String body = objectMapper.writeValueAsString(request);
+        
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .PUT(HttpRequest.BodyPublishers.ofString(body))
+                .header("Content-Type", "application/json")
+                .build();
+        
+        HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        
+        if (response.statusCode() == 200) {
+            logger.info("Balance updated successfully");
+            return objectMapper.readValue(response.body(), MonthlyBalanceResponse.class);
+        } else {
+            logger.error("Failed to update balance. Status: " + response.statusCode());
+            throw new Exception("Failed to update balance: " + response.statusCode());
         }
     }
 }
