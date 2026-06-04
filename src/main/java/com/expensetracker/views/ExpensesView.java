@@ -183,10 +183,16 @@ public class ExpensesView extends VerticalLayout {
                 updateTotal();
                 renderCalendar();
             }
+
+            // Load balance data
+            loadBalance();
         } catch (Exception e) {
             logger.error("Error loading expenses: " + e.getMessage());
             showNotification("Error loading expenses: " + e.getMessage());
         }
+    }
+
+    private void loadBalance() {
     }
 
     private void renderCalendar() {
