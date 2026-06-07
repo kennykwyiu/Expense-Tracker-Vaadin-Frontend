@@ -1,5 +1,6 @@
 package com.expensetracker.views;
 
+import com.expensetracker.components.BalanceSummaryCard;
 import com.expensetracker.components.CalendarComponent;
 import com.expensetracker.components.ExpenseFormDialog;
 import com.expensetracker.dto.CreateExpenseRequest;
@@ -7,6 +8,7 @@ import com.expensetracker.dto.ExpenseResponse;
 import com.expensetracker.dto.ListExpensesResponse;
 import com.expensetracker.dto.UpdateExpenseRequest;
 import com.expensetracker.service.ApiClient;
+import com.expensetracker.service.BalanceService;
 import com.expensetracker.util.Logger;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -39,6 +41,7 @@ import java.util.stream.Collectors;
 @PageTitle("Expenses")
 public class ExpensesView extends VerticalLayout {
     private final ApiClient apiClient;
+    private final BalanceService balanceService;
     private final Logger logger = new Logger(ExpensesView.class);
 
     private YearMonth currentMonth;
@@ -48,9 +51,11 @@ public class ExpensesView extends VerticalLayout {
     private final Span totalSpan;
     private VerticalLayout calendarContainer;
     private CalendarComponent calendarComponent;
+    private BalanceSummaryCard balanceSummaryCard;
 
-    public ExpensesView(ApiClient apiClient) {
+    public ExpensesView(ApiClient apiClient, BalanceService balanceService) {
         this.apiClient = apiClient;
+        this.balanceService = balanceService;
         this.currentMonth = YearMonth.now();
 
         setSpacing(true);
@@ -58,6 +63,12 @@ public class ExpensesView extends VerticalLayout {
 
         // Header
         add(createHeader());
+
+        // Monthly Balance Summary Card
+        balanceSummaryCard = new BalanceSummaryCard();
+        balanceSummaryCard.setOnIncomeUpdate(this::updateIncome);
+        balanceSummaryCard.setOnBudgetUpdate(this::updateBudget);
+        add(balanceSummaryCard);
 
         // Month/Year Picker
         add(createMonthPicker());
