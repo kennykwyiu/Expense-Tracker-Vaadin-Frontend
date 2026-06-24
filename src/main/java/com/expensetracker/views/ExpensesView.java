@@ -204,11 +204,15 @@ public class ExpensesView extends VerticalLayout {
     }
 
     private void loadBalance() {
+        try {
             logger.info("Loading balance for " + currentMonth);
             var balance = balanceService.getMonthlyBalance(currentMonth.getYear(), currentMonth.getMonthValue());
             if (balance != null) {
                 balanceSummaryCard.updateBalance(balance);
             }
+        } catch (Exception e) {
+            logger.error("Error loading balance: " + e.getMessage());
+        }
     }
 
     private void renderCalendar() {
