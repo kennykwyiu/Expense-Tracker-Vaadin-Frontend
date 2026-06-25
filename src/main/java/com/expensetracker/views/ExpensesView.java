@@ -333,6 +333,11 @@ public class ExpensesView extends VerticalLayout {
         confirmDialog.open();
     }
 
+    private void updateIncome(BigDecimal income) {
+    }
+
+    private void updateBudget(BigDecimal budget) {
+    }
     private void showNotification(String message) {
         com.vaadin.flow.component.notification.Notification.show(message);
     }
