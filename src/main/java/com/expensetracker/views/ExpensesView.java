@@ -334,6 +334,7 @@ public class ExpensesView extends VerticalLayout {
     }
 
     private void updateIncome(BigDecimal income) {
+        try {
             logger.info("Updating income for " + currentMonth + ": " + income);
             var updatedBalance = balanceService.updateIncomeThisWeek(
                     currentMonth.getYear(),
@@ -342,6 +343,10 @@ public class ExpensesView extends VerticalLayout {
             );
             balanceSummaryCard.updateBalance(updatedBalance);
             showNotification("Income updated successfully");
+        } catch (Exception e) {
+            logger.error("Error updating income: " + e.getMessage());
+            showNotification("Error updating income: " + e.getMessage());
+        }
     }
 
     private void updateBudget(BigDecimal budget) {
