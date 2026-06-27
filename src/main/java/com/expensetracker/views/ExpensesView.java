@@ -350,6 +350,14 @@ public class ExpensesView extends VerticalLayout {
     }
 
     private void updateBudget(BigDecimal budget) {
+            logger.info("Updating budget for " + currentMonth + ": " + budget);
+            var updatedBalance = balanceService.updateExpenseBudget(
+                    currentMonth.getYear(),
+                    currentMonth.getMonthValue(),
+                    budget
+            );
+            balanceSummaryCard.updateBalance(updatedBalance);
+            showNotification("Budget updated successfully");
     }
     private void showNotification(String message) {
         com.vaadin.flow.component.notification.Notification.show(message);
