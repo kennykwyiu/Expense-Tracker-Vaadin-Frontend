@@ -18,4 +18,5 @@ public class CreateExpenseRequest {
     private BigDecimal amount;
     private String category;
     private String description;
+    private Integer sequence;
 }
