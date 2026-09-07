@@ -308,6 +308,27 @@ public class ExpensesView extends VerticalLayout {
         }
     }
 
+    private void updateExpense(
+            Integer expenseId,
+            UpdateExpenseRequest request
+    ) {
+        try {
+            apiClient.updateExpense(
+                    expenseId,
+                    request.getDate(),
+                    request.getAmount(),
+                    request.getCategory(),
+                    request.getDescription()
+            );
+
+            loadExpenses();
+            showNotification("Expense updated successfully");
+        } catch (Exception e) {
+            logger.error("Error updating expense: " + e.getMessage());
+            showNotification("Error updating expense: " + e.getMessage());
+        }
+    }
+
     private void deleteExpense(ExpenseResponse expense) {
         logger.info("Deleting expense ID: " + expense.getId());
         Dialog confirmDialog = new Dialog();
