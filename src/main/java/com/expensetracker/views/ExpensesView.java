@@ -300,7 +300,7 @@ public class ExpensesView extends VerticalLayout {
                     expense.getCategory(),
                     expense.getDescription()
             );
-            dialog.setOnSave(this::saveExpenses);
+            dialog.setOnUpdate(request -> updateExpense(expense.getId(), request));
             dialog.open();
         } catch (Exception e) {
             logger.error("Error opening edit form: " + e.getMessage());
