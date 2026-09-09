@@ -60,6 +60,18 @@ public class ApiClient {
     }
 
     /**
+     * Create a single expense.
+     */
+    public ExpenseResponse createExpense(LocalDate date, BigDecimal amount, String category, String description) {
+        CreateExpenseRequest request = new CreateExpenseRequest();
+        request.setDate(date);
+        request.setAmount(amount);
+        request.setCategory(category);
+        request.setDescription(description);
+        return createExpense(request);
+    }
+
+    /**
      * Update an existing expense.
      */
     public ExpenseResponse updateExpense(Integer id, LocalDate date, BigDecimal amount, String category, String description) {
