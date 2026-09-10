@@ -34,15 +34,9 @@ public class ApiClient {
     /**
      * Create a single expense.
      */
-    public ExpenseResponse createExpense(LocalDate date, BigDecimal amount, String category, String description) {
+    public ExpenseResponse createExpense(CreateExpenseRequest request) {
         try {
-            CreateExpenseRequest request = new CreateExpenseRequest();
-            request.setDate(date);
-            request.setAmount(amount);
-            request.setCategory(category);
-            request.setDescription(description);
-
-            logger.info("Creating expense: " + category + " - " + amount);
+            logger.info("Creating expense: " + request.getCategory() + " - " + request.getAmount());
 
             return webClient.post()
                     .uri("/expenses")
