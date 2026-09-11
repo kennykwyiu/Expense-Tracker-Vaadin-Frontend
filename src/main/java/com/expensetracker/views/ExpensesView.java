@@ -273,12 +273,7 @@ public class ExpensesView extends VerticalLayout {
         try {
             logger.info("Saving " + expenses.size() + " expenses");
             if (expenses.size() == 1) {
-                apiClient.createExpense(
-                        expenses.get(0).getDate(),
-                        expenses.get(0).getAmount(),
-                        expenses.get(0).getCategory(),
-                        expenses.get(0).getDescription()
-                );
+                apiClient.createExpense(expenses.get(0));
             } else {
                 apiClient.batchCreateExpenses(expenses);
             }
