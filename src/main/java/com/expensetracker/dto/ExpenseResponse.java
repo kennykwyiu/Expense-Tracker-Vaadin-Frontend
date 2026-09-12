@@ -20,6 +20,7 @@ public class ExpenseResponse {
     private BigDecimal amount;
     private String category;
     private String description;
+    private Integer sequence;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
