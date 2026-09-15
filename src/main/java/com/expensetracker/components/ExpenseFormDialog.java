@@ -38,6 +38,7 @@ public class ExpenseFormDialog extends Dialog {
     private final TextArea descriptionArea;
     private final VerticalLayout itemsContainer;
     private final List<ExpenseItem> expenseItems = new ArrayList<>();
+    private int nextSequence = 1;
     private final Button toggleDescriptionBtn;
 
     private Consumer<List<CreateExpenseRequest>> onSave;
@@ -163,17 +164,18 @@ public class ExpenseFormDialog extends Dialog {
             return;
         }
 
-        // Create current item
+        // Create current item with the next sequence so add-order is persisted on save
         ExpenseItem currentItem = new ExpenseItem(
                 datePicker.getValue(),
                 amountField.getValue(),
                 categoryCombo.getValue(),
-                descriptionArea.getValue()
+                descriptionArea.getValue(),
+                nextSequence++
         );
-        expenseItems.add(0, currentItem); // Add to top
+        expenseItems.add(currentItem);
 
-        // Display added item
-        Div itemDiv = createItemDisplay(currentItem, expenseItems.indexOf(currentItem));
+        // Display added item (newest at top; sequence number is the save order)
+        Div itemDiv = createItemDisplay(currentItem);
         itemsContainer.addComponentAsFirst(itemDiv);
         itemsContainer.setVisible(true);
 
@@ -194,7 +196,7 @@ public class ExpenseFormDialog extends Dialog {
     /**
      * Create display for added item with delete button
      */
-    private Div createItemDisplay(ExpenseItem item, int index) {
+    private Div createItemDisplay(ExpenseItem item) {
         Div itemDiv = new Div();
         itemDiv.addClassNames(
                 LumoUtility.Padding.SMALL,
@@ -206,11 +208,12 @@ public class ExpenseFormDialog extends Dialog {
         itemDiv.getStyle().set("align-items", "center");
 
         StringBuilder itemText = new StringBuilder();
-        itemText.append(String.format("%s - %s ($%.2f)",
-                item.date,
-                item.category,
-                item.amount));
-
+        itemText.append(String.format("#%d %s - %s ($%.2f)",
+            item.sequence,
+            item.date, 
+            item.category, 
+            item.amount));
+        
         if (item.description != null && !item.description.isEmpty()) {
             itemText.append(" - ").append(item.description);
         }
@@ -220,7 +223,7 @@ public class ExpenseFormDialog extends Dialog {
         Button deleteBtn = new Button(VaadinIcon.TRASH.create());
         deleteBtn.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_ERROR);
         deleteBtn.addClickListener(e -> {
-            expenseItems.remove(index);
+            expenseItems.remove(item);
             itemsContainer.remove(itemDiv);
             if (expenseItems.isEmpty()) {
                 itemsContainer.setVisible(false);
@@ -259,7 +262,8 @@ public class ExpenseFormDialog extends Dialog {
                         datePicker.getValue(),
                         amountField.getValue(),
                         categoryCombo.getValue(),
-                        descriptionArea.getValue()
+                        descriptionArea.getValue(),
+                        nextSequence++
                 );
                 expenseItems.add(currentItem);
             }
@@ -271,12 +275,14 @@ public class ExpenseFormDialog extends Dialog {
 
             if (onSave != null) {
                 List<CreateExpenseRequest> requests = new ArrayList<>();
+                expenseItems.sort((a, b) -> Integer.compare(a.sequence, b.sequence));
                 for (ExpenseItem item : expenseItems) {
                     CreateExpenseRequest request = new CreateExpenseRequest();
                     request.setDate(item.date);
                     request.setAmount(item.amount);
                     request.setCategory(item.category);
                     request.setDescription(item.description);
+                    request.setSequence(item.sequence);
                     requests.add(request);
                 }
                 logger.info("Saving " + requests.size() + " expenses");
@@ -317,7 +323,7 @@ public class ExpenseFormDialog extends Dialog {
         amountField.setValue(amount);
         categoryCombo.setValue(category);
         descriptionArea.setValue(description != null ? description : "");
-
+        
         // Show description if it has content
         if (description != null && !description.isEmpty()) {
             descriptionVisible = true;
@@ -335,12 +341,14 @@ public class ExpenseFormDialog extends Dialog {
         BigDecimal amount;
         String category;
         String description;
+        int sequence;
 
-        ExpenseItem(LocalDate date, BigDecimal amount, String category, String description) {
+        ExpenseItem(LocalDate date, BigDecimal amount, String category, String description, int sequence) {
             this.date = date;
             this.amount = amount;
             this.category = category;
             this.description = description;
+            this.sequence = sequence;
         }
     }
 }
